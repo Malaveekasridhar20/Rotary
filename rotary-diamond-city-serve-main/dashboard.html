@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotary Dashboard</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background-color: #f0f2f5; 
+    }
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 20px; 
+    }
+    .card { 
+      background: white; 
+      border-radius: 8px; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+      padding: 20px; 
+      margin-bottom: 20px; 
+    }
+    .header { 
+      background: #003399; 
+      color: white; 
+      padding: 20px; 
+      border-radius: 8px; 
+      margin-bottom: 20px; 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      margin: 0;
+    }
+    .status {
+      background-color: #4CAF50;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .status.error {
+      background-color: #f44336;
+    }
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+      gap: 20px; 
+    }
+    .stat { 
+      text-align: center; 
+      padding: 20px; 
+      background: #f5f5f5; 
+      border-radius: 8px; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .stat:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .stat-value { 
+      font-size: 32px; 
+      font-weight: bold; 
+      color: #003399; 
+      margin-bottom: 5px;
+    }
+    .stat-label { 
+      color: #666; 
+      font-size: 16px;
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-top: 10px;
+    }
+    th, td { 
+      padding: 12px 15px; 
+      text-align: left; 
+      border-bottom: 1px solid #ddd; 
+    }
+    th { 
+      background-color: #f5f5f5; 
+      font-weight: 600;
+    }
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .tab.active {
+      border-bottom: 2px solid #003399;
+      color: #003399;
+      font-weight: bold;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .btn {
+      background-color: #003399;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn:hover {
+      background-color: #002277;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Rotary Diamond City Dashboard</h1>
+      <div id="apiStatus" class="status">Connecting...</div>
+    </div>
+    
+    <div class="card">
+      <h2>Database Overview</h2>
+      <div class="grid" id="statsGrid">
+        <div class="stat">
+          <div class="stat-value" id="eventsCount">-</div>
+          <div class="stat-label">Events</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="projectsCount">-</div>
+          <div class="stat-label">Projects</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="membersCount">-</div>
+          <div class="stat-label">Members</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="galleryCount">-</div>
+          <div class="stat-label">Gallery Items</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="tabs">
+        <div class="tab active" data-tab="events">Events</div>
+        <div class="tab" data-tab="projects">Projects</div>
+        <div class="tab" data-tab="members">Members</div>
+        <div class="tab" data-tab="gallery">Gallery</div>
+      </div>
+      
+      <div class="tab-content active" id="events">
+        <h2>Events</h2>
+        <div id="eventsTable" class="loading">Loading events...</div>
+      </div>
+      
+      <div class="tab-content" id="projects">
+        <h2>Projects</h2>
+        <div id="projectsTable" class="loading">Loading projects...</div>
+      </div>
+      
+      <div class="tab-content" id="members">
+        <h2>Members</h2>
+        <div id="membersTable" class="loading">Loading members...</div>
+      </div>
+      
+      <div class="tab-content" id="gallery">
+        <h2>Gallery</h2>
+        <div id="galleryTable" class="loading">Loading gallery items...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // API base URL
+    const API_BASE = 'http://localhost:3001';
+    
+    // Check API connection
+    fetch(`${API_BASE}/test`)
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('apiStatus').textContent = 'Connected';
+        console.log('API is available:', data);
+        
+        // Load database stats
+        loadDatabaseStats();
+        
+        // Load initial data
+        loadEvents();
+      })
+      .catch(error => {
+        document.getElementById('apiStatus').textContent = 'Disconnected';
+        document.getElementById('apiStatus').classList.add('error');
+        console.error('API error:', error);
+      });
+    
+    // Load database stats
+    function loadDatabaseStats() {
+      fetch(`${API_BASE}/db-status`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('eventsCount').textContent = data.tables.events || 0;
+          document.getElementById('projectsCount').textContent = data.tables.projects || 0;
+          document.getElementById('membersCount').textContent = data.tables.members || 0;
+          document.getElementById('galleryCount').textContent = data.tables.gallery || 0;
+        })
+        .catch(error => {
+          console.error('Error loading database stats:', error);
+        });
+    }
+    
+    // Load events
+    function loadEvents() {
+      fetch(`${API_BASE}/api/events`)
+        .then(response => response.json())
+        .then(data => {
+          const tableHtml = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Location</th>
+                  <th>Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(event => `
+                  <tr>
+                    <td>${event.title || 'Untitled'}</td>
+                    <td>${event.date || 'N/A'}</td>
+                    <td>${event.time || 'N/A'}</td>
+                    <td>${event.location || 'N/A'}</td>
+                    <td>${event.category || 'N/A'}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+          document.getElementById('eventsTable').innerHTML = tableHtml;
+        })
+        .catch(error => {
+          document.getElementById('eventsTable').innerHTML = `<p>Error loading events: ${error.message}</p>`;
+          console.error('Error loading events:', error);
+        });
+    }
+    
+    // Load projects
+    function loadProjects() {
+      fetch(`${API_BASE}/api/projects`)
+        .then(response => response.json())
+        .then(data => {
+          const tableHtml = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(project => `
+                  <tr>
+                    <td>${project.title || 'Untitled'}</td>
+                    <td>${project.date || 'N/A'}</td>
+                    <td>${project.location || 'N/A'}</td>
+                    <td>${project.type || 'N/A'}</td>
+                    <td>${project.status || 'N/A'}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+          document.getElementById('projectsTable').innerHTML = tableHtml;
+        })
+        .catch(error => {
+          document.getElementById('projectsTable').innerHTML = `<p>Error loading projects: ${error.message}</p>`;
+          console.error('Error loading projects:', error);
+        });
+    }
+    
+    // Load members
+    function loadMembers() {
+      fetch(`${API_BASE}/api/members`)
+        .then(response => response.json())
+        .then(data => {
+          const tableHtml = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(member => `
+                  <tr>
+                    <td>${member.name || 'Unnamed'}</td>
+                    <td>${member.position || 'N/A'}</td>
+                    <td>${member.email || 'N/A'}</td>
+                    <td>${member.phone || 'N/A'}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+          document.getElementById('membersTable').innerHTML = tableHtml;
+        })
+        .catch(error => {
+          document.getElementById('membersTable').innerHTML = `<p>Error loading members: ${error.message}</p>`;
+          console.error('Error loading members:', error);
+        });
+    }
+    
+    // Load gallery
+    function loadGallery() {
+      fetch(`${API_BASE}/api/gallery`)
+        .then(response => response.json())
+        .then(data => {
+          const tableHtml = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Image</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(item => `
+                  <tr>
+                    <td>${item.title || 'Untitled'}</td>
+                    <td>${item.description || 'No description'}</td>
+                    <td><img src="${item.image}" alt="${item.title}" style="width: 100px; height: 60px; object-fit: cover;"></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+          document.getElementById('galleryTable').innerHTML = tableHtml;
+        })
+        .catch(error => {
+          document.getElementById('galleryTable').innerHTML = `<p>Error loading gallery: ${error.message}</p>`;
+          console.error('Error loading gallery:', error);
+        });
+    }
+    
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Update active tab
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Update active content
+        const tabId = tab.getAttribute('data-tab');
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        document.getElementById(tabId).classList.add('active');
+        
+        // Load data for the selected tab
+        switch(tabId) {
+          case 'events':
+            loadEvents();
+            break;
+          case 'projects':
+            loadProjects();
+            break;
+          case 'members':
+            loadMembers();
+            break;
+          case 'gallery':
+            loadGallery();
+            break;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

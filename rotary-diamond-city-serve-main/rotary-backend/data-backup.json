@@ -1,0 +1,203 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "Annual Rotary Charity Gala",
+      "description": "Exclusive fundraising event for Rotary members and distinguished guests.",
+      "date": "2024-04-15",
+      "time": "7:00 PM",
+      "location": "Grand Hotel, Tiruchirappalli",
+      "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "category": "Fundraising",
+      "registration": "Members Only",
+      "participants": null,
+      "impact": null,
+      "year": "2024",
+      "status": "upcoming",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 2,
+      "title": "Rotary Leadership Seminar",
+      "description": "Advanced leadership training exclusively for Rotary club members.",
+      "date": "2024-05-05",
+      "time": "10:00 AM",
+      "location": "Rotary Hall, Anna Nagar",
+      "image": "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "category": "Education",
+      "registration": "Members Only",
+      "participants": null,
+      "impact": null,
+      "year": "2024",
+      "status": "upcoming",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 3,
+      "title": "malaveeka sridhar",
+      "description": "aa",
+      "date": "",
+      "time": "7:00 PM",
+      "location": "Grand Hotel, Tiruchirappalli",
+      "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "category": "Fellowship",
+      "registration": "Members Only",
+      "participants": "",
+      "impact": "",
+      "year": "2024",
+      "status": "upcoming",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 4,
+      "title": "Monthly Fellowship Meeting",
+      "description": "Regular fellowship meeting for all Rotary club members.",
+      "date": "2024-04-25",
+      "time": "6:30 PM",
+      "location": "Hotel Sangam",
+      "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "category": "Fellowship",
+      "registration": "Members Only",
+      "participants": null,
+      "impact": null,
+      "year": "2024",
+      "status": "upcoming",
+      "created_at": "2025-07-14 16:28:10"
+    }
+  ],
+  "messages": [],
+  "projects": [
+    {
+      "id": 1,
+      "title": "Digital Literacy for Seniors",
+      "description": "Teaching smartphone and internet basics to senior citizens for better connectivity.",
+      "date": "2024-04-20",
+      "location": "Senior Citizens Center, Cantonment",
+      "image": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "type": "Education",
+      "status": "active",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 2,
+      "title": "Clean River Initiative",
+      "description": "Community-wide river cleaning and pollution awareness campaign.",
+      "date": "2023-12-10",
+      "location": "Kaveri River Banks, Tiruchirappalli",
+      "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "type": "Environmental",
+      "status": "completed",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 3,
+      "title": "School Infrastructure Development",
+      "description": "Renovating classrooms and building computer labs in rural schools.",
+      "date": "2023-11-15",
+      "location": "Rural Schools, Manachanallur",
+      "image": "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "type": "Education",
+      "status": "completed",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 4,
+      "title": "Blood Donation Drive 2024",
+      "description": "Quarterly blood donation camps to support local hospitals and emergency needs.",
+      "date": "2024-03-15",
+      "location": "Community Center, Anna Nagar",
+      "image": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "type": "Community Service",
+      "status": "active",
+      "created_at": "2025-07-14 16:28:10"
+    }
+  ],
+  "members": [
+    {
+      "id": 1,
+      "name": "Dr. Rajesh Kumar",
+      "email": "rajesh@rotarytrichy.org",
+      "phone": "+91 98765 43210",
+      "position": "President",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+      "bio": "Chief Cardiologist, Apollo Hospital",
+      "year": null,
+      "linkedin": null,
+      "twitter": null,
+      "facebook": null,
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 2,
+      "name": "Mrs. Priya Sharma",
+      "email": "priya@rotarytrichy.org",
+      "phone": "+91 98765 43211",
+      "position": "Secretary",
+      "image": "https://images.unsplash.com/photo-1494790108755-2616b612b691?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+      "bio": "Senior Partner, Sharma & Associates Law Firm",
+      "year": null,
+      "linkedin": null,
+      "twitter": null,
+      "facebook": null,
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 3,
+      "name": "Mr. Suresh Babu",
+      "email": "suresh@rotarytrichy.org",
+      "phone": "+91 98765 43212",
+      "position": "Treasurer",
+      "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+      "bio": "Managing Director, Trichy Steel Industries",
+      "year": null,
+      "linkedin": null,
+      "twitter": null,
+      "facebook": null,
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 4,
+      "name": "Dr. Lakshmi Menon",
+      "email": "lakshmi@rotarytrichy.org",
+      "phone": "+91 98765 43213",
+      "position": "Vice President",
+      "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+      "bio": "Head of Pediatrics, Government Medical College",
+      "year": null,
+      "linkedin": null,
+      "twitter": null,
+      "facebook": null,
+      "created_at": "2025-07-14 16:28:10"
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "title": "Community Volunteering",
+      "image": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "description": "Members volunteering at local community center",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 2,
+      "title": "Blood Donation Drive",
+      "image": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "description": "Annual blood donation camp 2024",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 3,
+      "title": "Charity Gala Evening",
+      "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "description": "Annual fundraising gala event",
+      "created_at": "2025-07-14 16:28:10"
+    },
+    {
+      "id": 4,
+      "title": "School Visit Program",
+      "image": "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "description": "Educational support program in rural schools",
+      "created_at": "2025-07-14 16:28:10"
+    }
+  ]
+}

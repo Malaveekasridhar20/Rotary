@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #003399;
+    }
+    button {
+      background-color: #003399;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #002266;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Rotary Diamond City - Test Page</h1>
+    <p>This page tests basic functionality to help diagnose issues with the main application.</p>
+    
+    <h2>API Connection Test</h2>
+    <button onclick="testApiConnection()">Test API Connection</button>
+    <div id="apiStatus" class="status"></div>
+    
+    <h2>Database Status</h2>
+    <button onclick="checkDatabaseStatus()">Check Database Status</button>
+    <div id="dbStatus" class="status"></div>
+    
+    <script>
+      function testApiConnection() {
+        const apiStatus = document.getElementById('apiStatus');
+        apiStatus.innerHTML = 'Testing connection...';
+        apiStatus.className = 'status';
+        
+        fetch('http://localhost:3001/test')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            apiStatus.innerHTML = `✅ Connection successful! Message: ${data.message}, Time: ${data.timestamp}`;
+            apiStatus.className = 'status success';
+          })
+          .catch(error => {
+            apiStatus.innerHTML = `❌ Connection failed: ${error.message}`;
+            apiStatus.className = 'status error';
+          });
+      }
+      
+      function checkDatabaseStatus() {
+        const dbStatus = document.getElementById('dbStatus');
+        dbStatus.innerHTML = 'Checking database...';
+        dbStatus.className = 'status';
+        
+        fetch('http://localhost:3001/db-status')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            let html = `<p>✅ Database connected! File: ${data.database_file}</p>`;
+            html += '<p>Table counts:</p><ul>';
+            for (const [table, count] of Object.entries(data.tables)) {
+              html += `<li>${table}: ${count} records</li>`;
+            }
+            html += '</ul>';
+            dbStatus.innerHTML = html;
+            dbStatus.className = 'status success';
+          })
+          .catch(error => {
+            dbStatus.innerHTML = `❌ Database check failed: ${error.message}`;
+            dbStatus.className = 'status error';
+          });
+      }
+    </script>
+  </div>
+</body>
+</html>
